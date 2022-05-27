@@ -1,0 +1,131 @@
+<div class="inline-form">
+    <div class="card-login card-edit">
+        <div class="card-item" style="width: auto;">
+            <span *ngIf="!cadastarEnderecos">
+                <div class="header-modal">
+                    <div class="login-icon">
+                        <img src="../assets/imgs/bairrista.svg" />
+                    </div>
+                    <div class="title">
+                        <h3>Editar seus dados</h3>
+                    </div>
+                </div>
+                <div class="inputs-card">
+                    <br />
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [(ngModel)]="user.nome" placeholder="Seu nome"
+                                (keypress)="countLettersChange($event)">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [(ngModel)]="user.sobrenome"
+                                (keypress)="countLettersChange($event)" placeholder="Sobrenome">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [(ngModel)]="user.email" placeholder="Email">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [(ngModel)]="user.telefone"
+                                placeholder="Telefone" [(ngModel)]="user.telefone" [ngModelOptions]="{standalone: true}"
+                                mask="(00) 0 0000-0000" [dropSpecialCharacters]="true" [showMaskTyped]="false">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input matInput [matAutocomplete]="auto" name="profissao" #profissaoField="ngModel" style="width: -webkit-fill-available;"
+                                class="form-control main" [(ngModel)]="user.profissao" (ngModelChange)="doFilter()">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let p of listaProfissaoFilter" [value]="p.nome">
+                                    {{p.nome}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="btn-footer" (click)="salvarUsuario()">
+                    <h2 *ngIf="!loadingButton">Editar usuário</h2>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </div>
+                <div class="btn-footer" (click)="cadastarEnderecos = !cadastarEnderecos">
+                    <h2 *ngIf="!loadingButton">Alterar Endereço</h2>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </div>
+                <div *ngIf="!loadingButton" class="btn-footer" (click)="fechar()">
+                    <h2>fechar</h2>
+                </div>
+            </span>
+            <span *ngIf="cadastarEnderecos">
+                <div class="header-modal">
+                    <div class="login-icon">
+                        <img src="../assets/imgs/bairrista.svg" />
+                    </div>
+                    <div class="title">
+                        <h3>Editar seus dados</h3>
+                    </div>
+                </div>
+                <div class="inputs-card">
+                    <br />
+                    <br />
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [dropSpecialCharacters]="true" placeholder="CEP"
+                                mask="00.000-000" [(ngModel)]="endereco.cep" (blur)="searchCep()"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" placeholder="Lograduro / rua"
+                                [(ngModel)]="endereco.logradouro" [ngModelOptions]="{standalone: true}">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [(ngModel)]="endereco.bairro" placeholder="Bairro"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <select class="form-control main" [(ngModel)]="endereco.estado_id"
+                                [ngModelOptions]="{standalone: true}"
+                                (selectionChange)="selectState(endereco.estado_id)">
+                                <option *ngFor="let item of listsEstate" value="{{item.id}}">{{item.nome}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <select class="form-control main" [(ngModel)]="endereco.cidade_id"
+                                [ngModelOptions]="{standalone: true}">
+                                <option *ngFor="let item of listsCity" value="{{item.id}}">{{item.nome}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="btn-footer" (click)="salvarEndereco()">
+                    <h2 *ngIf="!loadingButton">Salvar endereço</h2>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </div>
+                <div class="btn-footer" (click)="cadastarEnderecos = !cadastarEnderecos">
+                    <h2 *ngIf="!loadingButton">Editar usuários</h2>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </div>
+                <div *ngIf="!loadingButton" class="btn-footer" (click)="fechar()">
+                    <h2>fechar</h2>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>

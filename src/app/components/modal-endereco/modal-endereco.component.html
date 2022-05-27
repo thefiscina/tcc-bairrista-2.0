@@ -1,0 +1,102 @@
+<div class="inline-form">
+    <div class="card-login card-edit" style="  width: 450px;">
+        <div class="card-item" style=" width: auto;">
+            <span *ngIf="!cadastarEnderecos">
+                <div class="login-icon">
+                    <img src="../assets/imgs/bairrista.svg" />
+                </div>
+                <div class="title">
+                    <h3>Edite seu cadastro</h3>
+                    <h2>Edite seu cadastro e adicione enderços</h2>
+                </div>
+                <div class="inputs-card">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>CEP</mat-label>
+                        <input matInput placeholder="CEP" [dropSpecialCharacters]="true" mask="00.000-000"
+                            [(ngModel)]="endereco.cep" (blur)="searchCep()" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                </div>
+                <div class="buttons-center">
+
+                </div>
+            </span>
+            <span *ngIf="cadastarEnderecos">
+                <div class="login-icon">
+                    <img src="../assets/imgs/bairrista.svg" />
+                </div>
+                <div class="title">
+                    <h3>Edite seu endereço</h3>
+                </div>
+                <div class="inputs-card">
+
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>CEP</mat-label>
+                        <input matInput placeholder="CEP" [dropSpecialCharacters]="true" mask="00.000-000"
+                            [(ngModel)]="endereco.cep" (blur)="searchCep()" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                    <div class="input-item" *ngIf="cepErro">
+                        <p [ngClass]="{'show-erro-input-text': cepErro }">Insira o cep</p>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Logradouro</mat-label>
+                        <input matInput placeholder="Lograduro / rua" [(ngModel)]="endereco.logradouro"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                    <div class="input-item" *ngIf="logradouroErro">
+                        <p [ngClass]="{'show-erro-input-text': logradouroErro }">Insira o logradouro</p>
+                    </div>
+
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Bairro</mat-label>
+                        <input matInput placeholder="Bairro" [(ngModel)]="endereco.bairro"
+                            [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+                    <div class="input-item" *ngIf="bairroErro">
+                        <p [ngClass]="{'show-erro-input-text': bairroErro }">Insira o bairro</p>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Estado</mat-label>
+                        <mat-select [(ngModel)]="endereco.estado_id" [ngModelOptions]="{standalone: true}"
+                            (selectionChange)="selectState(endereco.estado_id)">
+                            <mat-option *ngFor="let item of listsEstate" value="{{item.id}}">{{item.nome}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="input-item" *ngIf="estadoErro">
+                        <p [ngClass]="{'show-erro-input-text': estadoErro }">Por favor, selecione seu estado
+                        </p>
+                    </div>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Cidade</mat-label>
+                        <mat-select [(ngModel)]="endereco.cidade_id" [ngModelOptions]="{standalone: true}">
+                            <mat-option *ngFor="let item of listsCity" value="{{item.id}}">{{item.nome}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="input-item" *ngIf="cidadeErro">
+                        <p [ngClass]="{'show-erro-input-text': cidadeErro }">Por favor, selecione sua cidade
+                        </p>
+                    </div>
+
+                    <div class="buttons-center">
+                        <div class="btn-salvar-dado" (click)="salvarEndereco()">
+                            <h2 *ngIf="!loadingButton">Salvar</h2>
+                            <span *ngIf="loadingButton">
+                                <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </span>
+
+            <div class="register-footer"  (click)="voltarEditUser()">
+                <h2><span>Cancelar</span></h2>
+            </div>
+        </div>
+    </div>
+</div>

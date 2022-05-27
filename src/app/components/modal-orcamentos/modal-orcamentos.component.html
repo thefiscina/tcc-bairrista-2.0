@@ -1,0 +1,72 @@
+<div class="inline-form">
+    <div class="card-login card-edit">
+        <div class="card-item" style="width: auto;">
+            <span>
+                <div class="header-modal">
+                    <div class="login-icon">
+                        <img src="../assets/imgs/bairrista.svg" />
+                    </div>
+                    <div class="title">
+                        <h3>Orçamento profissional</h3>
+                    </div>
+                </div>
+                <div class="inputs-card">
+                    <br />
+                    <div class="block-2">
+                        <div class="title">
+                            <p><b>Profissional:</b></p>
+                        </div>
+                        <div class="details">
+                            <p>{{profissional.nome}}</p>
+                        </div>
+                    </div>
+                    <div class="block-2">
+                        <div class="title">
+                            <p><b>Profissão:</b></p>
+                        </div>
+                        <div class="details">
+                            <p>{{profissional.profissao}}</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <!-- <div class="col-lg-12 col-md-12" *ngIf="user">
+                            <input class="form-control main" type="text" [(ngModel)]="user.nome" readonly placeholder="Seu nome">
+                        </div> -->
+                        <div class="col-lg-12 col-md-12 flex-inputs">
+                            <div class="col-lg-6 col-md-6s">
+                                <label>Data do orçamento</label>
+                                <input class="form-control main" type="text" placeholder="Data do orçamento"
+                                    [(ngModel)]="orcamento.data" mask="00/00/0000" [dropSpecialCharacters]="false"
+                                    [showMaskTyped]="true" [ngModelOptions]="{standalone: true}">
+                            </div>
+
+                            <div class="col-lg-6 col-md-6">
+                                <label>Hora do orçamento</label>
+                                <input class="form-control main" type="text" placeholder="Hora orçamento"
+                                    [(ngModel)]="orcamento.hora" mask="00:00" [dropSpecialCharacters]="false"
+                                    [showMaskTyped]="true" [ngModelOptions]="{standalone: true}">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <textarea class="form-control main" name="about" id="" rows="10"
+                                [(ngModel)]="orcamento.descricao" [ngModelOptions]="{standalone: true}"
+                                placeholder="Descrição do problema / pedido"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="btn-footer" (click)="solicitarOrcamento()">
+                    <h2 *ngIf="!loadingButton">Solicitar orçamento</h2>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </div>
+                <div *ngIf="!loadingButton" class="btn-footer" (click)="fechar()">
+                    <h2>fechar</h2>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>

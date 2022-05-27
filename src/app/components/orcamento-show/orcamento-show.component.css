@@ -1,0 +1,244 @@
+.list-right-bar {
+    padding-top: 20px;
+    /* max-width: 430px;
+    height: 100%;
+    overflow: scroll; */
+}
+
+.item-list {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: space-between;
+    width: 100%;
+    margin: 5px 0px;
+}
+.inline-itens {
+    display: inline-flex;
+    align-items: center;
+}
+
+.info-item-list > img {
+    background: #dee1e6;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 10px;
+    width: 50px;
+}
+
+.info-text {
+}
+
+.info-text > h2 {
+    margin: 0px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100.3%;
+    /* identical to box height, or 15px */
+
+    letter-spacing: -0.711px;
+
+    /* Text/Dark */
+
+    color: #505887;
+    text-align: left;
+}
+
+.info-text > span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+    /* identical to box height */
+
+    /* Text/Light */
+
+    color: #718ebf;
+}
+
+.arrow-item {
+    cursor: pointer;
+}
+
+.btn-close {
+    background-color: #c91c1c;
+    border-radius: 10px;
+    /* padding: 0 10px; */
+    cursor: pointer;
+    /* width: 40px; */
+    /* height: 40px; */
+    /* float: right; */
+    position: absolute;
+    right: 30px;
+    top: 10px;
+}
+
+.btn-close > h3 {
+    margin: 0px;
+    color: #fff;
+    font-size: 18px;
+    /* padding: 10px; */
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.header-orcamento {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.arrow-back {
+    transform: rotate(180deg);
+    position: absolute;
+    left: 40px;
+    cursor: pointer;
+}
+
+.title-orcamento {
+}
+.title-orcamento > h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    color: #505887;
+    margin: 0px;
+}
+
+.body-info-prof {
+    margin: 10px;
+}
+
+.header-body-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: left;
+    padding: 10px;
+    width: 100%;
+}
+.status-img {
+    background: #dee1e6;
+    border-radius: 10px;
+    width: 70px;
+    height: 70px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 20px;
+}
+.status-img > img {
+    width: 50px;
+}
+
+.info-text-orcamento {
+    margin: 0 20px;
+}
+
+.info-nome {
+}
+
+.info-nome > h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 100.3%;
+    letter-spacing: -0.711px;
+    color: #505887;
+    margin: 0px;
+    text-align: left;
+}
+
+.info-profissao {
+}
+.info-profissao > h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    color: #718ebf;
+    text-align: left;
+    margin: 0px;
+}
+
+.info-avaliacao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: left;
+    margin: 0 20px;
+}
+
+.img-avaliacao {
+    margin: 0 10px;
+}
+
+.title-avaliation {
+}
+.title-avaliation > h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    color: #718ebf;
+    margin: 0px;
+    text-align: left;
+}
+
+.total-avaliation {
+}
+
+.total-avaliation > h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #1e1e1e;
+    margin: 0px;
+}
+
+.inline-inputs-data {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 240px;
+    margin-bottom: 20px;
+}
+
+.inline-inputs-data > h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    color: #718ebf;
+    margin: 0 10px;
+}
+.info-orcamento-complemento {
+    margin-top: 20px;
+}
+
+.info-orcamento-complemento > h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+
+    /* Text/Light */
+    margin: 5px 0px;
+    color: #718ebf;
+}
+
+.status-img-sucesso{
+    margin: 0 auto;
+    padding-top: 30px
+}
+
+.btn-salvar-cancelar{
+    background-color: #718ebf;
+}
+

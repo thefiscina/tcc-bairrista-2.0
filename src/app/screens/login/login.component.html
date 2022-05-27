@@ -1,0 +1,118 @@
+<!-- <div class="container">
+  <div class="inline-form">
+    <div class="card-login" style="  width: 450px;">
+      <div class="card-item" style=" width: auto;">
+        <div class="login-icon">
+          <img src="../assets/imgs/bairrista.svg" />
+        </div>
+        <div class="title">
+          <h3>Bairrista</h3>
+          <h2>Profissionais Perto de você!</h2>
+        </div>
+        <div class="inputs-card">
+          <mat-form-field appearance="outline">
+            <mat-label>CPF</mat-label>
+            <input matInput placeholder="CPF" [dropSpecialCharacters]="true" mask="000.000.000-00"
+              id="login_bairrista001" name="login_bairrista001" [(ngModel)]="login.cpf" autocomplete="none"
+              [ngModelOptions]="{standalone: true}">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput placeholder="Senha" id="senha_bairrista" name="senha_bairrista001"
+              [type]="seePass ? 'text' : 'password'" [(ngModel)]="login.password_"
+              [ngModelOptions]="{standalone: true}">
+            <button mat-icon-button matSuffix (click)="seePass = !seePass" [attr.aria-label]="'esconder senha'"
+              [attr.aria-pressed]="seePass">
+              <mat-icon>{{seePass ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <div *ngIf="capsLock" class="caps-lock">
+              <p>Caps lock ativado</p>
+            </div>
+          </mat-form-field>
+          <div class="input-item">
+            <p [ngClass]="{'show-erro-input-text': erroLogin }">Seu cpf ou senha estão incorretos.</p>
+          </div>
+        </div>
+        <div class="buttons-center">
+          <div class="btn" (click)="loginUser()">
+            <a *ngIf="!loading" class="btn-blue"> Entrar</a>
+            <span *ngIf="loading">
+              <img src="../assets/imgs/loading.gif" />
+            </span>
+          </div>
+        </div>
+        <div class="register-footer">
+          <h2>Ainda não tem uma conta? <span [routerLink]="'/register'">Cadastre-se.</span></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ff-alerts></ff-alerts> -->
+
+
+<section class="user-login section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="block">
+          <div class="image align-self-center"><img class="img-fluid"
+              src="../assets/images/Login/front-desk-sign-in.jpg" alt="desk-image"></div>
+          <div class="content text-center">
+            <div class="logo">
+              <a [routerLink]="'/'"><img src="../assets/images/logo_b.png" alt=""></a>
+            </div>
+            <div class="title-text">
+              <h3>Entre na sua conta.</h3>
+            </div>
+            <form>
+              <!-- Username -->
+              <mat-form-field appearance="outline">
+                <mat-label>CPF</mat-label>
+                <input matInput placeholder="CPF" [dropSpecialCharacters]="true" mask="000.000.000-00"
+                  id="login_bairrista001" name="login_bairrista001" [(ngModel)]="login.cpf" autocomplete="none"
+                  [ngModelOptions]="{standalone: true}">
+              </mat-form-field>
+              <!-- Password -->
+              <mat-form-field appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input matInput placeholder="Senha" id="senha_bairrista" name="senha_bairrista001"
+                  [type]="seePass ? 'text' : 'password'" [(ngModel)]="login.password_"
+                  [ngModelOptions]="{standalone: true}">
+                <button mat-icon-button matSuffix (click)="seePass = !seePass" [attr.aria-label]="'esconder senha'"
+                  [attr.aria-pressed]="seePass">
+                  <i class="ti-eye"></i>
+                </button>
+                <div *ngIf="capsLock" class="caps-lock">
+                  <p>Caps lock ativado</p>
+                </div>
+              </mat-form-field>
+              <div class="input-item">
+                <p [ngClass]="{'show-erro-input-text': erroLogin }">Seu cpf ou senha estão incorretos.</p>
+              </div>
+              <button class="btn btn-main-sm" (click)="loginUser()">
+                <span *ngIf="!loading">Acessar</span>
+                <span class="loading" *ngIf="loading">
+                  <img src="../assets/imgs/loading.gif" />
+                </span>
+              </button>
+
+              <br/>&nbsp;&nbsp;
+              <button class="btn btn-main-sm" (click)="authService.GoogleAuth()">
+                <span *ngIf="!loading"><img  class="img-google" src="../assets/images/Login/google.png"/> Continuar com Google</span>
+                <span class="loading" *ngIf="loading">
+                  <img src="../assets/imgs/loading.gif" />
+                </span>
+              </button>
+            </form>
+            <div class="new-acount">
+              <p>Ainda não tem uma conta? <a [routerLink]="'/register'"> CADASTRE-SE</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ff-alerts></ff-alerts>

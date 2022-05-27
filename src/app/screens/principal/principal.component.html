@@ -1,0 +1,27 @@
+<app-header></app-header>
+
+<section class="section">
+    <div class="map" fxFlex="1 1 100%">
+        <agm-map [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]="true">
+            <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="locationIcon"></agm-marker>
+            <agm-marker-cluster>
+                <agm-marker *ngFor="let marker of profissionais; let i=index" [latitude]="marker.enderecos[0].lat"
+                    [iconUrl]="marker.locationIcon" (markerClick)="markerClicked(marker)"
+                    [longitude]="marker.enderecos[0].lng">
+                </agm-marker>
+            </agm-marker-cluster>
+        </agm-map>
+        <div class="legenda-btn box-shadow dropdown-home">
+            <div class="dropdown-content-home">
+                <p>Legenda mapa</p>
+                <p><img src="../assets/imgs/pin_locale.svg" /> Sua localização </p>
+                <p><img src="../assets/imgs/profs/prof_info.svg" /> Sem orçamento </p>
+                <p><img src="../assets/imgs/profs/prof_warning.svg" /> Aguardando orçamento </p>
+                <p><img src="../assets/imgs/profs/prof_sucess.svg" /> Orçamento aceito </p>
+                <p><img src="../assets/imgs/profs/prof_danger.svg" /> Orçamento recusado </p>
+            </div>
+            <h2>Legenda</h2>
+        </div>
+    </div>
+</section>
+<ff-alerts></ff-alerts>

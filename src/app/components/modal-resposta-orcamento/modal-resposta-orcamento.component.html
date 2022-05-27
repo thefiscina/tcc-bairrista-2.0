@@ -1,0 +1,57 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">Nome do solicitante</h5>
+        <button type="button" class="close" (click)="fechar()">
+            <span>&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="block-2">
+            <div class="title">
+                <p><b>Descrição do problema ou pedido:</b></p>
+            </div>
+            <div class="details">
+                <p>{{orcamento.descricao}}</p>
+            </div>
+        </div>
+        <br />
+        <div class="block-2">
+            <div class="title">
+                <p><b>Data hora:</b>{{global_.dateTimeFormat(orcamento.data_hora_orcamento)}} </p>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="form-title">
+            <h3>Responda orçamento</h3>
+        </div>
+        <form action="#">
+            <div class="row">
+                <div class="col-md-12">
+                    <textarea class="form-control main" name="about" id="" rows="10"
+                        [(ngModel)]="orcamentoResposta.descricao"
+                        placeholder="Responda a solicitação do cliente"></textarea>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <input class="form-control main" type="text" id="valor" placeholder="Valor"
+                        [(ngModel)]="orcamentoResposta.valor" mask="separator.2" separatorLimit="100000"
+                        [dropSpecialCharacters]="true" [showMaskTyped]="false">
+                </div>
+                <div class="col-12 text-right">
+                    <button class="btn btn-main-md btn-yellow" (click)="recusarOrcamento()">
+                        <span *ngIf="!loadingButton">Recusar orçamento</span>
+                        <span *ngIf="loadingButton">
+                            <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                        </span>
+                    </button>&nbsp;&nbsp;
+                    <button class="btn btn-main-md" (click)="salvarOrcamentoResposta(orcamentoResposta)">
+                        <span *ngIf="!loadingButton">Responder orçamento</span>
+                        <span *ngIf="loadingButton">
+                            <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

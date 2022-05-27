@@ -1,0 +1,183 @@
+<div class="right-bar" id="right-bar">
+    <div class="btn-close" (click)="closeRightBar()">
+        <h3>X</h3>
+    </div>
+    <div class="header-right-bar" *ngIf="!profissional">
+        <h2>Profissionais</h2>
+        <h3>Selecione o profissional para iniciar o orçamento</h3>
+    </div>   
+    <div class="list-right-bar">
+        <span *ngIf="!profissional">
+            <span *ngFor="let item of profissionais">
+                <div class="item-list">
+                    <span class="inline-itens">
+                        <div class="info-item-list">
+                            <img [src]="item.locationIcon" />
+                        </div>
+                        <div class="info-text">
+                            <h2>{{item.nome}}</h2>
+                            <span>{{item.profissao}}</span>
+                        </div>
+                    </span>
+                    <div class="arrow-item" (click)="showProf(item)">
+                        <img src="../assets/imgs/arrow-rigth.svg" />
+                    </div>
+                </div>
+            </span>
+
+        </span>
+        <span *ngIf="profissional && !sucessoSolicitar">
+            <div class="header-orcamento">
+                <div class="arrow-back" (click)="voltarLista()">
+                    <img src="../assets/imgs/arrow-rigth.svg" />
+                </div>
+
+                <div class="title-orcamento">
+                    <h2>Realizar Orçamento</h2>
+                </div>
+            </div>
+
+            <div class="body-info-prof">
+                <div class="header-body-info hide-for-small-only">
+                    <div class="status-img">
+                        <img [src]="profissional.locationIcon" />
+                    </div>
+
+                    <div class="info-text-orcamento">
+                        <div class="info-nome">
+                            <h2> {{profissional.nome}}</h2>
+                        </div>
+                        <div class="info-profissao">
+                            <h2>{{profissional.profissao}}</h2>
+                        </div>
+                    </div>
+
+                    <div class="info-avaliacao">
+                        <div class="img-avaliacao">
+                            <img src="../assets/imgs/star.svg" />
+                        </div>
+
+                        <div>
+                            <div class="title-avaliation">
+                                <h2>Avaliações</h2>
+                            </div>
+                            <div class="total-avaliation">
+                                <h2>{{profissional.avaliacoes.length}} avaliações</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-body-info show-for-small-only">
+                    <div class="status-img">
+                        <img [src]="profissional.locationIcon" />
+                    </div>
+
+                    <div class="info-text-orcamento">
+                        <div class="info-nome">
+                            <h2> {{profissional.nome}}</h2>
+                        </div>
+                        <div class="info-profissao">
+                            <h2>{{profissional.profissao}}</h2>
+                        </div>
+                    </div>                 
+                </div>
+                <div class="header-body-info show-for-small-only">
+                    <div class="info-avaliacao">
+                        <div class="img-avaliacao">
+                            <img src="../assets/imgs/star.svg" />
+                        </div>
+
+                        <div>
+                            <div class="title-avaliation">
+                                <h2>Avaliações</h2>
+                            </div>
+                            <div class="total-avaliation">
+                                <h2>{{profissional.profissao}}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orcamento-campos" *ngIf="profissional.status != 'PENDENTE'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descreva seu problema / pedido</mat-label>
+                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                            [(ngModel)]="orcamento.descricao" cdkAutosizeMinRows="10"
+                            cdkAutosizeMaxRows="10"></textarea>
+                    </mat-form-field>
+                    <div class="input-item" *ngIf="erroOrcamento">
+                        <p [ngClass]="{'show-erro-input-text': erroOrcamento }">{{erroOrcamentoText}}</p>
+                    </div>
+
+                    <div class="info-orcamento-complemento">
+                        <h2>
+                            Indique a data e hora
+                        </h2>
+                    </div>
+                    <div class="inputs-orcamentos inline-inputs-data">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Data do orçamento</mat-label>
+                            <input matInput placeholder="data" id="dataHora001" name="dataHora001"
+                                [(ngModel)]="orcamento.data" mask="00/00/0000" [dropSpecialCharacters]="false"
+                                [showMaskTyped]="true" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                        <h2> ás </h2>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Hora orçamento</mat-label>
+                            <input matInput placeholder="hora" id="hora001" name="hora001" [(ngModel)]="orcamento.hora"
+                                [ngModelOptions]="{standalone: true}" mask="00:00" [dropSpecialCharacters]="false"
+                                [showMaskTyped]="true" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                    </div>
+                    <div class="input-item" *ngIf="erroData">
+                        <p [ngClass]="{'show-erro-input-text': erroData }">Favor inserir uma data e hora correta</p>
+                    </div>
+                    <br />
+                    <div class="buttons-center">
+                        <div class="btn-salvar-dado" (click)="solicitarOrcamento()">
+                            <h2 *ngIf="!loadingButton">Solicitar orçamento</h2>
+                            <span *ngIf="loadingButton">
+                                <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="info-orcamento-complemento" *ngIf="profissional.status == 'PENDENTE'">
+                        <h2>
+                            Orçamento em análise, você será notificado quando o profissional analisar!
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </span>
+        <span *ngIf="profissional && sucessoSolicitar">
+            <div class="header-orcamento">
+                <div class="arrow-back" (click)="voltarLista()">
+                    <img src="../assets/imgs/arrow-rigth.svg" />
+                </div>
+
+                <div class="title-orcamento">
+                    <h2>Orçamento Solicitado</h2>
+                </div>
+            </div>
+            <div class="body-info-prof">
+                <div class="title-orcamento">
+                    <h2>Você receberá uma notificação quando o orçamento for respondido.</h2>
+                </div>
+                <div class="header-body-info">
+                    <div class="status-img-sucesso">
+                        <img src="../assets/imgs/sucesso_solicitar.svg" />
+                    </div>
+                </div>
+            </div>
+            <div class="buttons-center">
+                <div class="btn-salvar-dado" (click)="voltarLista()">
+                    <h2>Voltar</h2>
+                </div>
+            </div>
+
+        </span>
+    </div>
+</div>

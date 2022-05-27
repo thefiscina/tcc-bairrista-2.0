@@ -1,0 +1,35 @@
+.card-item {
+    width: 440px;
+}
+/* 
+.card-login {
+    width: 700px;
+} */
+.mat-form-field {
+    width: 100%;
+}
+
+.input-item > p {
+    color: #c91c1c;
+    margin: 10px;
+    display: none;
+}
+
+.show-erro-input-text {
+    display: block;
+}
+
+.loading {
+}
+
+.loading > img {
+    width: 30px;
+}
+
+.btn-m{
+    margin: 10px;
+}
+.img-google{
+    width: 23px;
+    margin-right: 10px;
+}

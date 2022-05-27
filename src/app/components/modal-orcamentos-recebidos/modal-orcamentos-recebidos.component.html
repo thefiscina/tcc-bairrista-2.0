@@ -1,0 +1,36 @@
+<div class="inline-form">
+    <div class="card-login card-edit">
+        <div class="card-item" style="width: auto;">
+            <span>
+                <div class="header-modal">
+                    <div class="login-icon">
+                        <img src="../assets/imgs/bairrista.svg" />
+                    </div>
+                    <div class="title">
+                        <h3>Solicitações</h3>
+                    </div>
+                </div>
+                <div class="list-itens">
+                    <div class="job" *ngIf="orcamentos.length== 0">
+                        <div class="content">
+                            <h3>Sem orçamentos para responder</h3>
+                        </div>
+                    </div>
+                    <div class="job" *ngFor="let item of orcamentos">
+                        <div class="content">
+                            <h3>{{item.descricao}}</h3>
+                        </div>
+                        <div class="btns-groups">
+                            <div class="apply-button">
+                                <a (click)="openModalDetalhes(item.id)" class="btn btn-main-sm">Detalhes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-footer" (click)="fechar()">
+                    <h2>fechar</h2>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="orcamento-show" id="orcamento-show">
+    <div class="btn-close" (click)="closeRightBar()">
+        <h3>X</h3>
+    </div>
+    <div class="list-orcamento-show" *ngIf="orcamento">
+        <span *ngIf="orcamento">
+            <div class="header-orcamento">
+                <div class="title-orcamento">
+                    <h2>Visualizar Orçamento</h2>
+                </div>
+            </div>
+
+            <div class="body-info-prof">    
+                <div class="header-body-info hide-for-small-only">
+                    <div class="status-img">
+                        <img src="../assets/imgs/profs/prof_warning.svg" />
+                    </div>
+
+                    <div *ngIf="usuarioSolicitante" class="info-text-orcamento">
+                        <div class="info-nome">
+                            <h2>{{usuarioSolicitante.nome}}</h2>
+                        </div>
+                        <div class="info-profissao">
+                            <h2>{{usuarioSolicitante.profissao}}</h2>
+                        </div>
+                    </div>
+
+                    <div  *ngIf="usuarioSolicitante" class="info-avaliacao">
+                        <div class="img-avaliacao">
+                            <img src="../assets/imgs/star.svg" />
+                        </div>
+
+                        <div>
+                            <div class="title-avaliation">
+                                <h2>Avaliações</h2>
+                            </div>
+                            <div class="total-avaliation">
+                                <h2>{{usuarioSolicitante.avaliacoes.length}} avaliações</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="usuarioSolicitante" class="header-body-info show-for-small-only">
+                    <div class="status-img">
+                        <img src="../assets/imgs/profs/prof_warning.svg" />
+                    </div>
+
+                    <div class="info-text-orcamento">
+                        <div class="info-nome">
+                            <h2>{{usuarioSolicitante.nome}}</h2>
+                        </div>
+                        <div class="info-profissao">
+                            <h2>{{usuarioSolicitante.profissao}}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div  *ngIf="usuarioSolicitante" class="header-body-info show-for-small-only">
+                    <div class="info-avaliacao">
+                        <div class="img-avaliacao">
+                            <img src="../assets/imgs/star.svg" />
+                        </div>
+
+                        <div>
+                            <div class="title-avaliation">
+                                <h2>Avaliações</h2>
+                            </div>
+                            <div class="total-avaliation">
+                                <h2>{{usuarioSolicitante.avaliacoes.length}} avaliações</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orcamento-campos" *ngIf="orcamento">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Descrição do problema / pedido</mat-label>
+                        <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                            [(ngModel)]="orcamento.descricao" cdkAutosizeMinRows="10" disabled
+                            cdkAutosizeMaxRows="10"></textarea>
+                    </mat-form-field>
+                    <div class="info-orcamento-complemento">
+                        <h2>
+                            Data e hora solicitadas {{global_.dateTimeFormat(orcamento.data_hora_orcamento)}}
+                        </h2>
+                    </div>
+                    <br />
+                    <div class="buttons-center" *ngIf="orcamento.status_orcamento == 'PENDENTE'">
+                        <div class="btn-salvar-dado" (click)="openModalResposta()">
+                            <h2 *ngIf="!loadingButton">Responder orçamento</h2>
+                            <span *ngIf="loadingButton">
+                                <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                            </span>
+                        </div>
+                    </div><br/>
+                    <div class="buttons-center" *ngIf="orcamento.status_orcamento != 'RECUSADO' && orcamento.status_orcamento != 'RECUSADO_PROFISSIONAL' && orcamento.status_orcamento != 'APROVADO'">
+                        <div class="btn-salvar-dado btn-salvar-cancelar" (click)="recusarOrcamento()">
+                            <h2 *ngIf="!loadingButton">Recusar orçamento</h2>
+                            <span *ngIf="loadingButton">
+                                <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="info-orcamento-complemento" *ngIf="orcamento.status_orcamento == 'RECUSADO_PROFISSIONAL' || orcamento.status_orcamento == 'RECUSADO'">
+                        <h2>
+                            Orçamento recusado!
+                        </h2>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </div>
+</div>

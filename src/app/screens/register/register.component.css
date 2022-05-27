@@ -1,0 +1,33 @@
+.card-item {
+    width: auto;
+}
+/* 
+.card-login {
+    width: 450px;
+} */
+.mat-form-field {
+    width: 100%;
+}
+
+.input-item > p {
+    color: #c91c1c;
+    margin: 10px;
+    display: none;
+}
+
+.show-erro-input-text {
+    display: block;
+}
+
+.loading {
+}
+
+.loading > img {
+    width: 30px;
+}
+
+.register-footer > h2 {
+    font-size: 20px;
+    color: #c91c1b;
+    cursor: pointer;
+}

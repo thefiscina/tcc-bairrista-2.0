@@ -1,0 +1,22 @@
+.row {
+    display: block !important;
+}
+
+.btAtualizar input[type="button"] {
+    border-radius: 30px;
+    font-weight: normal;
+    font-size: 16px;
+    padding: 10px 60px;
+    float: right;
+    top: 0;
+    right: 0;
+    background: #6054b0;
+}
+
+.rejected {
+    border: 1px solid red !important;
+}
+
+.approved {
+    border: 1px solid #28a745 !important;
+}
