@@ -72,10 +72,8 @@ export class LoginComponent implements OnInit {
     this.apiService.PostPublic(`Auth`, obj).then((res: any) => {
       this.loading = false;
       this.authService.loginUser(res);
-
     }).catch((err) => {
       this.loading = false;
- 
       this.alertService.danger('Erro ao tentar realizar login');
     });
   }

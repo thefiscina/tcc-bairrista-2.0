@@ -32,6 +32,8 @@ export class PrincipalComponent implements OnInit {
   prof_warning = '../assets/imgs/profs/prof_warning.svg';
   prof_sucess = '../assets/imgs/profs/prof_sucess.svg';
   prof_danger = '../assets/imgs/profs/prof_danger.svg';
+  userEndereco: any = false;
+  openedWindow: number = 0; // alternative: array of numbers
   constructor(public apiService: ApiService,
     private authService: AuthService,
     public global: Global,
@@ -41,11 +43,17 @@ export class PrincipalComponent implements OnInit {
     this.authService.currentUser.subscribe(res => {
       if (res != null) {
         this.user = res;
-
         if (this.user['profissao'] == null || this.user['profissao'] == "") {
-          this.alertService.warning('Clique na inicial do seu nome para adiconar uma profissão, sem isso você não poderá receber orçamentos');
+          this.alertService.warning('Vá para configurações e adicione uma profissão ao seu perfil, sem isso você não poderá receber orçamentos');
         }
         this.checkUserEndereco(this.user.id);
+      }
+    });
+    this.authService.hasEndereco.subscribe(res => {
+      if (res != null) {
+        this.user.enderecos = res;
+        this.userEndereco = true;
+        localStorage.setItem('@bairrista:currentUser', JSON.stringify(this.user));
       }
     });
   }
@@ -53,10 +61,14 @@ export class PrincipalComponent implements OnInit {
   checkUserEndereco(id: any) {
     this.apiService.Get(`Usuario/${id}/Endereco`).then((res: any) => {
       if (res.length == 0) {
-        this.alertService.info('Você ainda não cadastrou um endereço, cadastre para ficar visível para outros usuários');
+        this.alertService.info('Você ainda não cadastrou um endereço, cadastre para poder solicitar um orçamento');
         this.authService.setHasEndereco(null);
+        this.userEndereco = false;
       } else {
         this.authService.setHasEndereco(res[0]);
+        this.userEndereco = true;
+        this.user.enderecos = res;
+        localStorage.setItem('@bairrista:currentUser', JSON.stringify(this.user));
       }
     }).catch((err) => {
 
@@ -76,6 +88,15 @@ export class PrincipalComponent implements OnInit {
   }
 
   markerClicked(marker: any) {
+    console.log(marker)
+    if (!this.userEndereco) {
+      this.alertService.info('Você ainda não cadastrou um endereço, cadastre para poder solicitar um orçamento');
+      return;
+    }
+    if (marker.status == "PENDENTE") {
+      this.alertService.warning('Existe um orçamento pendente para esse profissional, Aguarde o retorno desse profissional');
+      return;
+    }
     const dialogRef = this.dialog.open(ModalOrcamentosComponent, {
       width: 'auto',
       data: marker
@@ -127,14 +148,12 @@ export class PrincipalComponent implements OnInit {
             element.enderecos[0].lng = parseFloat(parseFloat(loc[1]).toFixed(7));
             if (element.orcamentos.length > 0) {
               var verif = element.orcamentos.filter((x: any) => x.usuario_solicitante_id == this.user.id);
-              debugger
               verif = verif.sort(function (a: any, b: any) {
                 var c: any = new Date(a.data_criacao);
                 var d: any = new Date(b.data_criacao);
                 return d - c;
               });
               if (verif.length > 0) {
-
                 switch (verif[0].status_orcamento) {
                   case "PENDENTE":
                     element.locationIcon = this.prof_warning;
@@ -168,7 +187,8 @@ export class PrincipalComponent implements OnInit {
                     element.locationIcon = this.prof_info;
                     break;
                 }
-
+              } else {
+                element.locationIcon = this.prof_info;
               }
             } else {
               element.locationIcon = this.prof_info;
@@ -183,4 +203,13 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
+
+
+  openWindow(id: any) {
+    this.openedWindow = id; // alternative: push to array of numbers
+  }
+
+  isInfoWindowOpen(id: any) {
+    return this.openedWindow == id; // alternative: check if id is in array
+  }
 }

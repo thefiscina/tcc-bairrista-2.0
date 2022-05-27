@@ -8,6 +8,14 @@
                 <agm-marker *ngFor="let marker of profissionais; let i=index" [latitude]="marker.enderecos[0].lat"
                     [iconUrl]="marker.locationIcon" (markerClick)="markerClicked(marker)"
                     [longitude]="marker.enderecos[0].lng">
+                    <agm-info-window [isOpen]="isInfoWindowOpen(marker.id)" [latitude]="marker.enderecos[0].lat"
+                        [longitude]="marker.enderecos[0].lng">
+                        Profissional: {{marker.nome}}
+                        <br />
+                        Profissão: {{marker.profissao}}
+                        <br />
+                        Telefone: {{marker.telefone}}
+                    </agm-info-window>
                 </agm-marker>
             </agm-marker-cluster>
         </agm-map>
