@@ -5,6 +5,7 @@ import { AlertService } from '@full-fledged/alerts';
 import { ModalEditUserComponent } from 'src/app/components/modal-edit-user/modal-edit-user.component';
 import { ModalEditEnderecoComponent } from 'src/app/components/modal-endereco/modal-endereco.component';
 import { ModalOrcamentosComponent } from 'src/app/components/modal-orcamentos/modal-orcamentos.component';
+import { ModalProfissionaisDetalhesComponent } from 'src/app/components/modal-profissionais-detalhes/modal-profissionais-detalhes.component';
 import { ModalResponseOrcamentoComponent } from 'src/app/components/modal-resposta-orcamento/modal-resposta-orcamento.component';
 import { Global } from 'src/app/global';
 import { ApiService } from 'src/app/service/apiServices';
@@ -97,6 +98,14 @@ export class PrincipalComponent implements OnInit {
       this.alertService.warning('Existe um orçamento pendente para esse profissional, Aguarde o retorno desse profissional');
       return;
     }
+    if (marker.status == "AGUARDANDO_CLIENTE") {
+      this.alertService.warning('O profissional respondeu a sua solicitação, clique em Orçamentos solicitados para visualizar');
+      return;
+    }
+    if (marker.status == "APROVADO") {
+      this.alertService.success('Orçamento aprovado.');
+      return;
+    }
     const dialogRef = this.dialog.open(ModalOrcamentosComponent, {
       width: 'auto',
       data: marker
@@ -121,7 +130,7 @@ export class PrincipalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getProfissionais();
     });
   }
 
@@ -132,7 +141,7 @@ export class PrincipalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.getProfissionais();
     });
   }
 
@@ -154,6 +163,7 @@ export class PrincipalComponent implements OnInit {
                 return d - c;
               });
               if (verif.length > 0) {
+                element.orcamento_id = verif[0].id;
                 switch (verif[0].status_orcamento) {
                   case "PENDENTE":
                     element.locationIcon = this.prof_warning;
@@ -203,13 +213,25 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
-
-
   openWindow(id: any) {
     this.openedWindow = id; // alternative: push to array of numbers
   }
 
   isInfoWindowOpen(id: any) {
     return this.openedWindow == id; // alternative: check if id is in array
+  }
+
+
+  visualizarOrcamento(id: any) {
+    const dialogRef = this.dialog.open(ModalProfissionaisDetalhesComponent, {
+      width: 'auto',
+      data: id
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'atualizar') {
+        this.getProfissionais();
+      }
+    });
   }
 }

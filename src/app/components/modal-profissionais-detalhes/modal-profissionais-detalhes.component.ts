@@ -34,7 +34,11 @@ export class ModalProfissionaisDetalhesComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.global_ = global;
-    console.log(data);
+    this.authService.currentUser.subscribe(res => {
+      if (res != null) {
+        this.user = res;                
+      }
+    });
     this.getOrcamento(data);
   }
 

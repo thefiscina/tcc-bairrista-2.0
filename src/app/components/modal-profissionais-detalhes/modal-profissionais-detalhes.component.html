@@ -9,6 +9,15 @@
         <!-- Location -->
         <div class="block-2">
             <div class="title">
+                <p><b>Status:</b></p>
+            </div>
+            <div class="details">
+                <p>{{orcamento.status_orcamento}}</p>
+            </div>
+        </div>
+        <br />
+        <div class="block-2">
+            <div class="title">
                 <p><b>Profissão:</b></p>
             </div>
             <div class="details">
@@ -37,16 +46,25 @@
             </div>
         </div>
         <br />
-        <div class="form-title">
+        <div class="form-title" *ngIf="orcamento.status_orcamento == 'APROVADO'">
+            <h3>Valor do Orçamento</h3>
+        </div>
+        <div class="form-title" *ngIf="orcamento.status_orcamento != 'APROVADO'">
             <h3>Aceitar orçamento</h3>
+        </div>
+        <div class="block-2" class="row" *ngIf="orcamentoresposta.length == 0">
+            <div class="title">
+                <p><b>O profissional ainda não visualizou seu orçamento</b></p>
+            </div>
         </div>
         <form action="#">
             <div class="row" *ngIf="orcamentoresposta.length > 0">
                 <div class="col-lg-6 col-md-6">
-                    <input class="form-control main" [(ngModel)]="orcamentoresposta[0].valor" mask="separator.2" [ngModelOptions]="{standalone: true}"
-                        separatorLimit="100000" type="text" placeholder="Valor" readonly>
+                    <input class="form-control main" [(ngModel)]="orcamentoresposta[0].valor" mask="separator.2"
+                        [ngModelOptions]="{standalone: true}" separatorLimit="100000" type="text" placeholder="Valor"
+                        readonly>
                 </div>
-                <div class="col-12 text-right">
+                <div class="col-12 text-right" *ngIf="orcamento.status_orcamento == 'PENDENTE'">
                     <button class="btn btn-main-md btn-yellow" (click)="recusarOrcamento()">
                         <span *ngIf="!loadingButton">Recusar orçamento</span>
                         <span *ngIf="loadingButton">
@@ -60,6 +78,18 @@
                             <img style="width: 30px;" src="../assets/imgs/loading.gif" />
                         </span>
                     </button>
+                </div>
+            </div>
+        </form>
+        <form action="#" *ngIf="user.id == orcamento.usuario_solicitante_id">
+            <div class="row">
+                <div class="col-12 text-right">
+                    <button class="btn btn-main-md btn-yellow" (click)="recusarOrcamento()">
+                        <span *ngIf="!loadingButton">Cancelar orçamento</span>
+                        <span *ngIf="loadingButton">
+                            <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                        </span>
+                    </button>                    
                 </div>
             </div>
         </form>

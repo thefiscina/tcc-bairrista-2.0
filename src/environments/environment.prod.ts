@@ -4,6 +4,15 @@
 
 export const environment = {
   production: false,
+  firebase: {
+    apiKey: "AIzaSyC0auXiLsVGrKd447AvvQZ_HsaXFmHaamo",
+    authDomain: "bairrista-351516.firebaseapp.com",
+    projectId: "bairrista-351516",
+    storageBucket: "bairrista-351516.appspot.com",
+    messagingSenderId: "457837396147",
+    appId: "1:457837396147:web:bdbef0833677401286f0c6",
+    measurementId: "G-XNCFNBMPMG"
+  }
 };
 /*
  * For easier debugging in development mode, you can import the following file

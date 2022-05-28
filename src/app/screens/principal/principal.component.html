@@ -15,6 +15,10 @@
                         Profissão: {{marker.profissao}}
                         <br />
                         Telefone: {{marker.telefone}}
+                        <div>
+                            <a style="cursor:pointer; color:blue"
+                                (click)="visualizarOrcamento(marker.orcamento_id)">Visualizar Orçamento </a>
+                        </div>
                     </agm-info-window>
                 </agm-marker>
             </agm-marker-cluster>
