@@ -64,7 +64,8 @@
                         [ngModelOptions]="{standalone: true}" separatorLimit="100000" type="text" placeholder="Valor"
                         readonly>
                 </div>
-                <div class="col-12 text-right" *ngIf="orcamento.status_orcamento == 'PENDENTE'">
+                <div class="col-12 text-right"
+                    *ngIf="orcamento.status_orcamento == 'PENDENTE' || orcamento.status_orcamento == 'AGUARDANDO_CLIENTE'  ">
                     <button class="btn btn-main-md btn-yellow" (click)="recusarOrcamento()">
                         <span *ngIf="!loadingButton">Recusar orçamento</span>
                         <span *ngIf="loadingButton">
@@ -81,7 +82,8 @@
                 </div>
             </div>
         </form>
-        <form action="#" *ngIf="user.id == orcamento.usuario_solicitante_id">
+        <form action="#"
+            *ngIf="user.id == orcamento.usuario_solicitante_id && orcamento.status_orcamento != 'RECUSADO' &&  orcamento.status_orcamento != 'RECUSADO_PROFISSIONAL' &&  orcamento.status_orcamento != 'AGUARDANDO_CLIENTE' &&  orcamento.status_orcamento != 'APROVADO' && orcamento.status_orcamento != 'FINALIZADO'">
             <div class="row">
                 <div class="col-12 text-right">
                     <button class="btn btn-main-md btn-yellow" (click)="recusarOrcamento()">
@@ -89,9 +91,35 @@
                         <span *ngIf="loadingButton">
                             <img style="width: 30px;" src="../assets/imgs/loading.gif" />
                         </span>
-                    </button>                    
+                    </button>
                 </div>
             </div>
         </form>
+        <form action="#"
+            *ngIf="orcamento.status_orcamento == 'APROVADO'">
+            <div class="row">
+                <div class="col-12 text-right">
+                    <button class="btn btn-main-md btn-green" (click)="FinalizarOrcamento()">
+                        <span *ngIf="!loadingButton">Finalizar trabalho</span>
+                        <span *ngIf="loadingButton">
+                            <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <form action="#"
+        *ngIf="orcamento.status_orcamento == 'FINALIZADO'">
+        <div class="row">
+            <div class="col-12 text-right">
+                <button class="btn btn-main-md btn-green" (click)="FinalizarOrcamento()">
+                    <span *ngIf="!loadingButton">Avaliar trabalho</span>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </button>
+            </div>
+        </div>
+    </form>
     </div>
 </div>

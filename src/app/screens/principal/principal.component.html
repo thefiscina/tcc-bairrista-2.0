@@ -3,21 +3,54 @@
 <section class="section">
     <div class="map" fxFlex="1 1 100%">
         <agm-map [zoom]="zoom" [latitude]="lat" [longitude]="lng" [disableDefaultUI]="true">
-            <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="locationIcon"></agm-marker>
+            <agm-marker [latitude]="lat" [longitude]="lng" [iconUrl]="locationIcon">
+                <agm-info-window [isOpen]="isInfoWindowOpen('sualatlong')" [latitude]="lat" [longitude]="lng">
+                    Sua localização
+                </agm-info-window>
+            </agm-marker>
             <agm-marker-cluster>
-                <agm-marker *ngFor="let marker of profissionais; let i=index" [latitude]="marker.enderecos[0].lat"
-                    [iconUrl]="marker.locationIcon" (markerClick)="markerClicked(marker)"
-                    [longitude]="marker.enderecos[0].lng">
-                    <agm-info-window [isOpen]="isInfoWindowOpen(marker.id)" [latitude]="marker.enderecos[0].lat"
-                        [longitude]="marker.enderecos[0].lng">
+                <agm-marker *ngFor="let marker of profissionais; let i=index" [latitude]="marker.enderecos[0].latitude"
+                    [iconUrl]="marker.locationIcon" [longitude]="marker.enderecos[0].longitude">
+                    <agm-info-window [isOpen]="isInfoWindowOpen(marker.id)" [latitude]="marker.enderecos[0].latitude"
+                        [longitude]="marker.enderecos[0].longitude">
                         Profissional: {{marker.nome}}
                         <br />
                         Profissão: {{marker.profissao}}
                         <br />
                         Telefone: {{marker.telefone}}
-                        <div>
+                        <br />
+                        Avaliações: {{marker.avaliacoes.length}}
+                        <div
+                            *ngIf="marker.status == null || marker.status == 'RECUSADO' || marker.status == 'FINALIZADO' || marker.status == 'AVALIADO' || marker.status == 'RECUSADO_PROFISSIONAL'">
+                            <a style="cursor:pointer; color:green" (click)="markerClicked(marker)">Solicitar Orçamento
+                            </a>
+                        </div>
+                        <br />
+                        <div
+                            *ngIf="marker.status == 'RECUSADO' || marker.status == 'FINALIZADO' || marker.status == 'AVALIADO' || marker.status == 'RECUSADO_PROFISSIONAL'">
                             <a style="cursor:pointer; color:blue"
                                 (click)="visualizarOrcamento(marker.orcamento_id)">Visualizar Orçamento </a>
+                        </div>
+                        <br />
+                        <div *ngIf="marker.status == 'AGUARDANDO_CLIENTE'">
+                            <a style="cursor:pointer; color:blue"
+                                (click)="visualizarOrcamento(marker.orcamento_id)">Visualizar resposta do profissional
+                            </a>
+                        </div>
+                        <br />
+                        <div *ngIf="marker.status == 'PENDENTE'">
+                            <a style="cursor:pointer; color:red"
+                                (click)="cancelarOrcamento(marker.orcamento_id)">Cancelar Orçamento </a>
+                        </div>
+                        <br />
+                        <div *ngIf="marker.status == 'APROVADO'">
+                            <a style="cursor:pointer; color:blue"
+                                (click)="visualizarOrcamento(marker.orcamento_id)">Finalizar e avaliar </a>
+                        </div>
+
+                        <div *ngIf="marker.status == 'FINALIZADO' && marker.status != 'AVALIADO'">
+                            <a style="cursor:pointer; color:gold"
+                                (click)="avaliarProfissional(marker)">Avaliar profissional </a>
                         </div>
                     </agm-info-window>
                 </agm-marker>

@@ -11,7 +11,7 @@
     "commit": "git add . && git commit -m'acertos' && git push",
     "restart": "del node_modules && npm install &&  ng serve --open",
     "heroku-postbuild": "ng build --prod",
-    "deploy": "firebase deploy" 
+    "deploy": "firebase deploy"
   },
   "private": true,
   "dependencies": {

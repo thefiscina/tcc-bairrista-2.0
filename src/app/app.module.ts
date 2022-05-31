@@ -10,7 +10,7 @@ import { ApiService } from './service/apiServices';
 import { Global } from './global';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { HomeComponent } from './screens/home/home.component';
+
 import { LoginComponent } from './screens/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
@@ -80,6 +80,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from 'src/environments/environment';
+import { ModalAvaliarComponent } from './components/modal-avaliar/modal-avaliar.component';
 
 export function initializeApp(appConfig: AppConfig) {
   return () => appConfig.load();
@@ -89,7 +90,6 @@ registerLocaleData(localePt, 'pt');
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     HeaderComponent,
     SideMenuComponent,
@@ -108,7 +108,8 @@ registerLocaleData(localePt, 'pt');
     ModalOrcamentosRecebidosComponent,
     ModalRendimentosComponent,
     ModalProfissionaisDetalhesComponent,
-    ModalOrcamentoSolicitadoComponent
+    ModalOrcamentoSolicitadoComponent,
+    ModalAvaliarComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -197,7 +198,8 @@ registerLocaleData(localePt, 'pt');
     ModalOrcamentosRecebidosComponent,
     ModalRendimentosComponent,
     ModalProfissionaisDetalhesComponent,
-    ModalOrcamentoSolicitadoComponent
+    ModalOrcamentoSolicitadoComponent,
+    ModalAvaliarComponent
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

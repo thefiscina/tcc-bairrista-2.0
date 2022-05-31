@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AlertService } from '@full-fledged/alerts';
+import { ModalAvaliarComponent } from 'src/app/components/modal-avaliar/modal-avaliar.component';
 import { ModalEditUserComponent } from 'src/app/components/modal-edit-user/modal-edit-user.component';
 import { ModalEditEnderecoComponent } from 'src/app/components/modal-endereco/modal-endereco.component';
 import { ModalOrcamentosComponent } from 'src/app/components/modal-orcamentos/modal-orcamentos.component';
@@ -85,7 +86,9 @@ export class PrincipalComponent implements OnInit {
       this.lng = pos.lng;
       this.zoom = 20;
     });
-    this.getProfissionais();
+    setTimeout(() => {
+      this.getProfissionais();
+    }, 2000);
   }
 
   markerClicked(marker: any) {
@@ -106,6 +109,9 @@ export class PrincipalComponent implements OnInit {
       this.alertService.success('Orçamento aprovado.');
       return;
     }
+    if (marker.status == "RECUSADO") {
+      this.alertService.info('Seu ultimo orçamento com esse profissional foi cancelado ou recusado');
+    }
     const dialogRef = this.dialog.open(ModalOrcamentosComponent, {
       width: 'auto',
       data: marker
@@ -121,7 +127,6 @@ export class PrincipalComponent implements OnInit {
   sairSistema() {
     this.authService.logoutUser();
   }
-
 
   openModalEndereco() {
     const dialogRef = this.dialog.open(ModalEditEnderecoComponent, {
@@ -146,7 +151,7 @@ export class PrincipalComponent implements OnInit {
   }
 
 
-  getProfissionais() {
+  getProfissionais_() {
     this.apiService.Get(`Usuario`).then((res: any) => {
       if (res.length > 0) {
         this.profissionais = res.filter((x: any) => x.enderecos.length > 0 && x.id != this.user.id && x.profissao != "");
@@ -190,7 +195,7 @@ export class PrincipalComponent implements OnInit {
                     element.status = "FINALIZADO";
                     break;
                   case "AVALIADO":
-                    element.locationIcon = this.prof_sucess;
+                    element.locationIcon = this.prof_info;
                     element.status = "AVALIADO";
                     break;
                   default:
@@ -213,14 +218,154 @@ export class PrincipalComponent implements OnInit {
     });
   }
 
+  atualizarUsuariosFakes(lista: any = []) {
+    var users = localStorage.getItem('@bairrista:profissionais');
+    if (users) {
+      var users_ = JSON.parse(users);
+      users_.forEach((element: any) => {
+        var loc = this.global.getRandomLocation(this.lat, this.lng);
+        var verfi_ = lista.filter((x: any) => x.id == element.id);
+        if (verfi_.length > 0) {
+          if (element.enderecos.length > 0) {
+            if (element.enderecos[0].latitude == "0" && element.enderecos[0].longitude == "0") {
+              element.enderecos[0].latitude = parseFloat(parseFloat(loc[0]).toFixed(7));
+              element.enderecos[0].longitude = parseFloat(parseFloat(loc[1]).toFixed(7));
+            }
+          }
+          element.avaliacoes = verfi_[0].avaliacoes;
+          if (verfi_[0].orcamentos.length > 0) {
+            var verif = verfi_[0].orcamentos.filter((x: any) => x.usuario_solicitante_id == this.user.id);
+            verif = verif.sort(function (a: any, b: any) {
+              var c: any = new Date(a.data_criacao);
+              var d: any = new Date(b.data_criacao);
+              return d - c;
+            });
+            if (verif.length > 0) {
+              element.orcamento_id = verif[0].id;
+              switch (verif[0].status_orcamento) {
+                case "PENDENTE":
+                  element.locationIcon = this.prof_warning;
+                  element.status = "PENDENTE";
+                  break;
+                case "RECUSADO":
+                  element.locationIcon = this.prof_danger;
+                  element.status = "RECUSADO";
+                  break;
+                case "RECUSADO_PROFISSIONAL":
+                  element.locationIcon = this.prof_danger;
+                  element.status = "RECUSADO_PROFISSIONAL";
+                  break;
+                case "APROVADO":
+                  element.locationIcon = this.prof_sucess;
+                  element.status = "APROVADO";
+                  break;
+                case "AGUARDANDO_CLIENTE":
+                  element.locationIcon = this.prof_warning;
+                  element.status = "AGUARDANDO_CLIENTE";
+                  break;
+                case "FINALIZADO":
+                  element.locationIcon = this.prof_sucess;
+                  element.status = "FINALIZADO";
+                  break;
+                case "AVALIADO":
+                  element.locationIcon = this.prof_info;
+                  element.status = "AVALIADO";
+                  break;
+                default:
+                  element.locationIcon = this.prof_info;
+                  break;
+              }
+            } else {
+              element.locationIcon = this.prof_info;
+            }
+          } else {
+            element.locationIcon = this.prof_info;
+          }
+        }
+      });
+      this.profissionais = users_;
+      this.authService.setProfissionais(this.profissionais);
+      localStorage.setItem('@bairrista:profissionais', JSON.stringify(this.profissionais));
+    } else {
+      this.profissionais = lista.filter((x: any) => x.enderecos.length > 0 && x.id != this.user.id && x.profissao != "");
+      this.profissionais.forEach((element: any) => {
+        var loc = this.global.getRandomLocation(this.lat, this.lng);
+        if (element.enderecos.length > 0) {
+          element.enderecos[0].latitude = parseFloat(parseFloat(loc[0]).toFixed(7));
+          element.enderecos[0].longitude = parseFloat(parseFloat(loc[1]).toFixed(7));
+          if (element.orcamentos.length > 0) {
+            var verif = element.orcamentos.filter((x: any) => x.usuario_solicitante_id == this.user.id);
+            verif = verif.sort(function (a: any, b: any) {
+              var c: any = new Date(a.data_criacao);
+              var d: any = new Date(b.data_criacao);
+              return d - c;
+            });
+            if (verif.length > 0) {
+              element.orcamento_id = verif[0].id;
+              switch (verif[0].status_orcamento) {
+                case "PENDENTE":
+                  element.locationIcon = this.prof_warning;
+                  element.status = "PENDENTE";
+                  break;
+                case "RECUSADO":
+                  element.locationIcon = this.prof_danger;
+                  element.status = "RECUSADO";
+                  break;
+                case "RECUSADO_PROFISSIONAL":
+                  element.locationIcon = this.prof_danger;
+                  element.status = "RECUSADO_PROFISSIONAL";
+                  break;
+                case "APROVADO":
+                  element.locationIcon = this.prof_sucess;
+                  element.status = "APROVADO";
+                  break;
+                case "AGUARDANDO_CLIENTE":
+                  element.locationIcon = this.prof_warning;
+                  element.status = "AGUARDANDO_CLIENTE";
+                  break;
+                case "FINALIZADO":
+                  element.locationIcon = this.prof_sucess;
+                  element.status = "FINALIZADO";
+                  break;
+                case "AVALIADO":
+                  element.locationIcon = this.prof_info;
+                  element.status = "AVALIADO";
+                  break;
+                default:
+                  element.locationIcon = this.prof_info;
+                  break;
+              }
+            } else {
+              element.locationIcon = this.prof_info;
+            }
+          } else {
+            element.locationIcon = this.prof_info;
+          }
+        }
+      });
+      this.authService.setProfissionais(this.profissionais);
+      localStorage.setItem('@bairrista:profissionais', JSON.stringify(this.profissionais));
+    }
+  }
+
+  getProfissionais() {
+    this.apiService.Get(`Usuario`).then((res: any) => {
+      if (res.length > 0) {
+        this.atualizarUsuariosFakes(res);
+      }
+    }).catch((err) => {
+
+      this.alertService.danger('Erro ao obter endereços');
+    });
+  }
+
   openWindow(id: any) {
     this.openedWindow = id; // alternative: push to array of numbers
   }
 
   isInfoWindowOpen(id: any) {
-    return this.openedWindow == id; // alternative: check if id is in array
+    return this.openedWindow == id;
   }
-
 
   visualizarOrcamento(id: any) {
     const dialogRef = this.dialog.open(ModalProfissionaisDetalhesComponent, {
@@ -232,6 +377,32 @@ export class PrincipalComponent implements OnInit {
       if (result == 'atualizar') {
         this.getProfissionais();
       }
+    });
+  }
+
+  cancelarOrcamento(id: any) {
+    if (confirm("Deseja realmente cancelar esse orçamento?") == true) {
+      var obj = {
+        "status_orcamento": 'RECUSADO'
+      }
+      this.apiService.Put(`Orcamento/${id}`, obj).then((res: any) => {
+        this.alertService.success(`Orçamento recusado, você poderá solicitar novos orçamentos.`);
+        this.getProfissionais();
+      }).catch((err) => {
+
+      });
+
+    }
+  }
+
+  avaliarProfissional(marker: any) {
+    const dialogRef = this.dialog.open(ModalAvaliarComponent, {
+      width: 'auto',
+      data: marker
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProfissionais();
     });
   }
 }

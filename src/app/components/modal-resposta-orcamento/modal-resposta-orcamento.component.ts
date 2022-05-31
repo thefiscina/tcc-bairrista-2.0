@@ -97,9 +97,19 @@ export class ModalResponseOrcamentoComponent implements OnInit {
       this.loadingButton = false;
       return;
     }
-    obj_.orcamento_id = this.orcamento.id;
-    obj_.valor = parseFloat($("#valor").val());
 
+    if ($("#valor").val().includes(".")) {
+      var split = $("#valor").val().split(".");
+      if (split.length > 2) {
+        obj_.valor = parseFloat($("#valor").val().replace(".", ""));
+      } else {
+        obj_.valor = parseFloat($("#valor").val());
+      }
+    } else {
+      obj_.valor = parseFloat($("#valor").val());
+    }
+
+    obj_.orcamento_id = this.orcamento.id;
     this.postOrcamentoResposta(obj_);
   }
 

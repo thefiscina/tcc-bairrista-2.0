@@ -34,8 +34,8 @@
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <input class="form-control main" type="text" id="valor" placeholder="Valor"
-                        [(ngModel)]="orcamentoResposta.valor" mask="separator.2" separatorLimit="100000"
-                        [dropSpecialCharacters]="true" [showMaskTyped]="false">
+                        [(ngModel)]="orcamentoResposta.valor" mask="separator.2" thousandSeparator="."
+                        separatorLimit="10000000" [allowNegativeNumbers]="false" placeholder="Valor">
                 </div>
                 <div class="col-12 text-right">
                     <button class="btn btn-main-md btn-yellow" (click)="recusarOrcamento()">

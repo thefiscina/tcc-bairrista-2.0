@@ -36,7 +36,7 @@ export class ModalProfissionaisDetalhesComponent implements OnInit {
     this.global_ = global;
     this.authService.currentUser.subscribe(res => {
       if (res != null) {
-        this.user = res;                
+        this.user = res;
       }
     });
     this.getOrcamento(data);
@@ -85,8 +85,6 @@ export class ModalProfissionaisDetalhesComponent implements OnInit {
   submitUser() {
 
   }
-
-
   openModalDetalhes() {
     $("#android-developer").modal();
   }
@@ -129,5 +127,29 @@ export class ModalProfissionaisDetalhesComponent implements OnInit {
       this.showAlertErro('Houve um erro ao tentar obter orçamentos');
     });
   }
+
+  FinalizarOrcamento() {
+    if (this.loadingButton) {
+      return;
+    }
+
+    this.loadingButton = true;
+
+    var obj = {
+      "status_orcamento": 'FINALIZADO'
+    }
+    this.apiService.Put(`Orcamento/${this.orcamento.id}`, obj).then((res: any) => {
+      this.alertService.success(`Trabalho finalizado, você poderá avaliar esse usuário.`);
+      this.dialogRef.close('atualizar');
+      this.loadingButton = false;
+    }).catch((err) => {
+      this.showAlertErro('Houve um erro ao tentar obter orçamentos');
+    });
+  }
+
+  avaliarProfissional(){
+
+  }
+
 
 }

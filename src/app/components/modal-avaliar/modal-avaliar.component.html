@@ -1,0 +1,53 @@
+<div class="inline-form">
+    <div class="card-login card-edit">
+        <div class="card-item" style="width: auto;">
+            <span>
+                <div class="header-modal">
+                    <div class="login-icon">
+                        <img src="../assets/imgs/bairrista.svg" />
+                    </div>
+                    <div class="title">
+                        <h3>Orçamento profissional</h3>
+                    </div>
+                </div>
+                <div class="inputs-card">
+                    <br />
+                    <div class="block-2">
+                        <div class="title">
+                            <p><b>Profissional:</b></p>
+                        </div>
+                        <div class="details">
+                            <p>{{profissional.nome}}</p>
+                        </div>
+                    </div>
+                    <div class="block-2">
+                        <div class="title">
+                            <p><b>Profissão:</b></p>
+                        </div>
+                        <div class="details">
+                            <p>{{profissional.profissao}}</p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">                      
+                        <div class="col-md-12">
+                            <textarea class="form-control main" name="about" id="" rows="10"
+                                [(ngModel)]="avaliacao.texto" [ngModelOptions]="{standalone: true}"
+                                placeholder="Avalie o profissinal"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="btn-footer" (click)="avaliarProfissional()">
+                    <h2 *ngIf="!loadingButton">Avaliar</h2>
+                    <span *ngIf="loadingButton">
+                        <img style="width: 30px;" src="../assets/imgs/loading.gif" />
+                    </span>
+                </div>
+                <div *ngIf="!loadingButton" class="btn-footer" (click)="fechar()">
+                    <h2>fechar</h2>
+                </div>
+            </span>
+        </div>
+    </div>
+</div>

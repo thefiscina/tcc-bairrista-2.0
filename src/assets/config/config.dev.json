@@ -4,6 +4,8 @@
   },
   "img": {},
   "apiServer": {
+    "apiUrl2": "https://localhost:44309/",
     "apiUrl": "https://bairrista-api-tcc.herokuapp.com/"
   }
 }
+
