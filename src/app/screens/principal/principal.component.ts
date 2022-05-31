@@ -86,9 +86,9 @@ export class PrincipalComponent implements OnInit {
       this.lng = pos.lng;
       this.zoom = 20;
     });
-    setTimeout(() => {
+    setInterval(() => {
       this.getProfissionais();
-    }, 2000);
+    }, 5000);
   }
 
   markerClicked(marker: any) {
